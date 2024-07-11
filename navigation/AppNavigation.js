@@ -1,10 +1,9 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import BottomNavigatorScreen from './BottomTabNavigator';
 import { NotificationScreen, LocationScreen, DetailsPage } from '../pages';
-import { WelcomeScreen, SigninScreen, SignUpScreen, BottomNavigatorScreen } from '../screens';
-import SideBar from '../components/modals/SideBar';
-import Menubar from '../components/MenuBar';
+import { WelcomeScreen, SigninScreen, SignUpScreen} from '../screens';
 
 const Stack = createNativeStackNavigator();
 export default function AppNavigation() {
