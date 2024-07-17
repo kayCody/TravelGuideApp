@@ -2,7 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import BottomNavigatorScreen from './BottomTabNavigator';
-import { NotificationScreen, LocationScreen, DetailsPage } from '../pages';
+import { NotificationScreen, LocationScreen, DetailsPage, BookingsPage } from '../pages';
 import { WelcomeScreen, SigninScreen, SignUpScreen} from '../screens';
 
 const Stack = createNativeStackNavigator();
@@ -14,6 +14,7 @@ export default function AppNavigation() {
         <Stack.Screen options={{ headerShown: false }} name="signin" component={SigninScreen} />
         <Stack.Screen options={{ headerShown: false }} name="signup" component={SignUpScreen} />
         <Stack.Screen options={{ headerShown: false }} name="details" component={DetailsPage} />
+        <Stack.Screen options={{ headerShown: false }} name="bookings" component={BookingsPage} />
         <Stack.Screen options={{ headerShown: false }} name="bottomTab" component={BottomNavigatorScreen} />
       </Stack.Navigator>
     </NavigationContainer>

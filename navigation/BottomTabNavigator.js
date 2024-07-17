@@ -1,4 +1,4 @@
-import { SafeAreaView, View, Text, TouchableOpacity, Image } from 'react-native'
+import {  Image } from 'react-native'
 import React from 'react'
 import { HomeScreen, BookingScreen, TripScreen, NavScreen, AccountScreen } from '../screens/index';
 import { createBottomTabNavigator, BottomTabBar } from '@react-navigation/bottom-tabs';

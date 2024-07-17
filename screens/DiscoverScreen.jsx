@@ -47,6 +47,7 @@ export default function HomeScreen({navigation}) {
             {/* Categories */}
             <View className=''>
               <ScrollView horizontal={true} style={{ width: wp('95%') }} className='py-2'>
+                {/* cat-tabs */}
                 <View className='flex-row gap-x-3 justify-center items-center'>
                   {CatTabs(currentTab, setCurrentTab, 'All')}
                   {CatTabs(currentTab, setCurrentTab, 'Popular')}
@@ -55,86 +56,147 @@ export default function HomeScreen({navigation}) {
                   {CatTabs(currentTab, setCurrentTab, 'Activities')}
                 </View>
               </ScrollView>
+              {/* Tab Contents Display */}
               <View className=''>
                 {currentTab === 'All' && (
                   <ScrollView className={``} style={{}} horizontal={true}>
-                    {GooglePlaces.map(place => (
-                      <TouchableOpacity key={place.id} onPress={() => navigation.navigate('details', { place })} className={`relative flex gap-x-3 mr-2`}>
-                        <Image source={place.image[0]} className={`rounded-xl shadow-lg p-2`} style={{ height: hp('10%'), width: wp('55%') }} />
-                        <View className='absolute top-0 right-0  p-2 '>
-                          <View className='rounded-full w-8 h-8 flex items-center justify-center bg-gray-500 bg-opacity-5'>
-                            <TouchableOpacity><Ionicons name='heart-outline' size={20} color='white' /></TouchableOpacity>
-                          </View>
-                        </View>
-                        <View className=''>
-                          <Text className='text-lg font-bold'>{place.name}</Text>
-                          <View className='flex-row items-center'>
-                            <Ionicons name='location' size={15} color='red' />
-                            <Text className='text-sm text-gray-400'>{place.location}</Text>
-                          </View>
-                        </View>
-                      </TouchableOpacity>
-                    ))}
+                    {GooglePlaces ? (
+                      <>
+                        {
+                          GooglePlaces.map(place => (
+                            <TouchableOpacity key={place.id} onPress={() => navigation.navigate('details', { place })} className={`relative flex gap-x-3 mr-2`}>
+                              <Image source={place.image[0]} className={`rounded-xl shadow-lg p-2`} style={{ height: hp('10%'), width: wp('55%') }} />
+                              <View className='absolute top-0 right-0  p-2 '>
+                                <View className='rounded-full w-8 h-8 flex items-center justify-center bg-gray-500 bg-opacity-5'>
+                                  <TouchableOpacity><Ionicons name='heart-outline' size={20} color='white' /></TouchableOpacity>
+                                </View>
+                              </View>
+                              <View className=''>
+                                <Text className='text-lg font-bold'>{place.name}</Text>
+                                <View className='flex-row items-center'>
+                                  <Ionicons name='location' size={15} color='red' />
+                                  <Text className='text-sm text-gray-400'>{place.location}</Text>
+                                </View>
+                              </View>
+                            </TouchableOpacity>
+                          ))
+                        }
+                      </>
+                    ) : (
+                        <Text className> No Data loaded yet /fetched</Text>
+                    )}
                   </ScrollView>
                 )}
                 {currentTab === 'Popular' && (
                   <ScrollView className={``} style={{}} horizontal={true}>
-                    {GooglePlaces.map(place => (
-                      <View className={``} key={place.id}>
-                        {place.ratings > 4 && (
-                          <TouchableOpacity key={place.id} onPress={() => navigation.navigate('details', { place })} className={`relative flex gap-x-3 mr-2`}>
-                            <Image source={place.image[0]} className={`rounded-xl shadow-lg p-2`} style={{ height: hp('10%'), width: wp('55%') }} />
-                            <View className='absolute top-0 right-0  p-2 '>
-                              <View className='rounded-full w-8 h-8 flex items-center justify-center bg-gray-500 bg-opacity-5'>
-                                <TouchableOpacity><Ionicons name='heart-outline' size={20} color='white' /></TouchableOpacity>
+                    {GooglePlaces ? (<>
+                      {GooglePlaces.map(place => (
+                        <View className={``} key={place.id}>
+                          {place.ratings > 4 && (
+                            <TouchableOpacity key={place.id} onPress={() => navigation.navigate('details', { place })} className={`relative flex gap-x-3 mr-2`}>
+                              <Image source={place.image[0]} className={`rounded-xl shadow-lg p-2`} style={{ height: hp('10%'), width: wp('55%') }} />
+                              <View className='absolute top-0 right-0  p-2 '>
+                                <View className='rounded-full w-8 h-8 flex items-center justify-center bg-gray-500 bg-opacity-5'>
+                                  <TouchableOpacity><Ionicons name='heart-outline' size={20} color='white' /></TouchableOpacity>
+                                </View>
                               </View>
-                            </View>
-                            <View className=''>
-                              <Text className='text-lg font-bold'>{place.name}</Text>
-                              <View className='flex-row items-center'>
-                                <Ionicons name='location' size={15} color='red' />
-                                <Text className='text-sm text-gray-400'>{place.location}</Text>
+                              <View className=''>
+                                <Text className='text-lg font-bold'>{place.name}</Text>
+                                <View className='flex-row items-center'>
+                                  <Ionicons name='location' size={15} color='red' />
+                                  <Text className='text-sm text-gray-400'>{place.location}</Text>
+                                </View>
                               </View>
-                            </View>
-                          </TouchableOpacity>
-                        )}
-                      </View>
-                    ))}
+                            </TouchableOpacity>
+                          )}
+                        </View>
+                      ))}
+                    </>) : (<Text>No Data loaded / fetched</Text>)}
                   </ScrollView>
                 )}
                 {currentTab === 'Recommended' && (
                   <ScrollView className={``} style={{}} horizontal={true}>
-                    {GooglePlaces.map(place => (
-                      <View className={``} key={place.id}>
-                        {place.ratings > 3  < 4 && (
-                          <TouchableOpacity key={place.id} onPress={() => navigation.navigate('details', { place })} className={`relative flex gap-x-3 mr-2`}>
-                            <Image source={place.image[0]} className={`rounded-xl shadow-lg p-2`} style={{ height: hp('10%'), width: wp('55%') }} />
-                            <View className='absolute top-0 right-0  p-2 '>
-                              <View className='rounded-full w-8 h-8 flex items-center justify-center bg-gray-500 bg-opacity-5'>
-                                <TouchableOpacity><Ionicons name='heart-outline' size={20} color='white' /></TouchableOpacity>
+                    {GooglePlaces ? (<>
+                      {GooglePlaces.map(place => (
+                        <View className={``} key={place.id}>
+                          {place.ratings > 3 < 4 && (
+                            <TouchableOpacity key={place.id} onPress={() => navigation.navigate('details', { place })} className={`relative flex gap-x-3 mr-2`}>
+                              <Image source={place.image[0]} className={`rounded-xl shadow-lg p-2`} style={{ height: hp('10%'), width: wp('55%') }} />
+                              <View className='absolute top-0 right-0  p-2 '>
+                                <View className='rounded-full w-8 h-8 flex items-center justify-center bg-gray-500 bg-opacity-5'>
+                                  <TouchableOpacity><Ionicons name='heart-outline' size={20} color='white' /></TouchableOpacity>
+                                </View>
                               </View>
-                            </View>
-                            <View className=''>
-                              <Text className='text-lg font-bold'>{place.name}</Text>
-                              <View className='flex-row items-center'>
-                                <Ionicons name='location' size={15} color='red' />
-                                <Text className='text-sm text-gray-400'>{place.location}</Text>
+                              <View className=''>
+                                <Text className='text-lg font-bold'>{place.name}</Text>
+                                <View className='flex-row items-center'>
+                                  <Ionicons name='location' size={15} color='red' />
+                                  <Text className='text-sm text-gray-400'>{place.location}</Text>
+                                </View>
                               </View>
-                            </View>
-                          </TouchableOpacity>
-                        )}
-                      </View>
-                    ))}
+                            </TouchableOpacity>
+                          )}
+                        </View>
+                      ))}
+                    </>) : (<Text>No Data loaded / fetched</Text>)}
                   </ScrollView>
                 )}
-                {currentTab === 'Most Visited' && (
+                {currentTab === 'Most visited' && (
                   <ScrollView className={``} style={{}} horizontal={true}>
-                    <Text className=''>Most Visited</Text>
+                    {
+                      GooglePlaces ? (<>
+                        {GooglePlaces.map(place => (
+                          <View className={``} key={place.id}>
+                            {place.ratings ===0 ? (
+                              <TouchableOpacity key={place.id} onPress={() => navigation.navigate('details', { place })} className={`relative flex gap-x-3 mr-2`}>
+                                <Image source={place.image[0]} className={`rounded-xl shadow-lg p-2`} style={{ height: hp('10%'), width: wp('55%') }} />
+                                <View className='absolute top-0 right-0  p-2 '>
+                                  <View className='rounded-full w-8 h-8 flex items-center justify-center bg-gray-500 bg-opacity-5'>
+                                    <TouchableOpacity><Ionicons name='heart-outline' size={20} color='white' /></TouchableOpacity>
+                                  </View>
+                                </View>
+                                <View className=''>
+                                  <Text className='text-lg font-bold'>{place.name}</Text>
+                                  <View className='flex-row items-center'>
+                                    <Ionicons name='location' size={15} color='red' />
+                                    <Text className='text-sm text-gray-400'>{place.location}</Text>
+                                  </View>
+                                </View>
+                              </TouchableOpacity>
+                            ):(<Text>No match data received</Text>)}
+                          </View>
+                        ))}
+                      </>) : (<Text>No Data loaded / fetched</Text>)
+                    }
                   </ScrollView>
                 )}
                 {currentTab === 'Activities' && (
                   <ScrollView className={``} style={{}} horizontal={true}>
-                    <Text className=''>Activities</Text>
+                    {
+                      GooglePlaces ? (<>
+                        {GooglePlaces.map(place => (
+                          <View className={``} key={place.id}>
+                            {place.ratings === 0 ? (
+                              <TouchableOpacity key={place.id} onPress={() => navigation.navigate('details', { place })} className={`relative flex gap-x-3 mr-2`}>
+                                <Image source={place.image[0]} className={`rounded-xl shadow-lg p-2`} style={{ height: hp('10%'), width: wp('55%') }} />
+                                <View className='absolute top-0 right-0  p-2 '>
+                                  <View className='rounded-full w-8 h-8 flex items-center justify-center bg-gray-500 bg-opacity-5'>
+                                    <TouchableOpacity><Ionicons name='heart-outline' size={20} color='white' /></TouchableOpacity>
+                                  </View>
+                                </View>
+                                <View className=''>
+                                  <Text className='text-lg font-bold'>{place.name}</Text>
+                                  <View className='flex-row items-center'>
+                                    <Ionicons name='location' size={15} color='red' />
+                                    <Text className='text-sm text-gray-400'>{place.location}</Text>
+                                  </View>
+                                </View>
+                              </TouchableOpacity>
+                            ) : (<Text>No match data received</Text>)}
+                          </View>
+                        ))}
+                      </>) : (<Text>No Data loaded / fetched</Text>)
+                    }
                   </ScrollView>
                 )}
               </View>
@@ -149,29 +211,31 @@ export default function HomeScreen({navigation}) {
               </TouchableOpacity>
             </View>
             <ScrollView className='' style={{ height: hp('35%') }}>
-              {GooglePlaces.map(place => (
-                <TouchableOpacity key={place.id} onPress={() => navigation.navigate('details', {place})} className={`relative flex-row  bg-[#f1f2f4]  rounded-xl mb-2`} style={{ width: wp('94%') }}>
-                  <Image source={place.image[0]} className={`rounded-xl shadow-lg `} style={{ height: hp('10%'), width: wp('25%') }} />
-                  <View className='absolute top-0 right-0  p-2 rounded-full'>
-                    <View className='rounded-full w-8 h-8 flex items-center justify-center bg-gray-500 bg-opacity-5'>
-                      <TouchableOpacity><Ionicons name='heart-outline' size={20} color='white' /></TouchableOpacity>
-                    </View>
-                  </View>
-                  <View className='ml-2'>
-                    <View className='space-y-2 p-1'>
-                      <Text className='text-lg text-black font-bold'>{place.name}</Text>
-                      <View className='flex-row items-center'>
-                        <Ionicons name='location' size={15} color='red' />
-                        <Text className='text-sm text-gray-400'>{place.location}</Text>
-                      </View>
-                      <View className='flex-row items-center gap-x-1'>
-                        <Ionicons name='star-half' size={15} color='yellow' />
-                        <Text className='text-sm text-gray-400'>{place.ratings}</Text>
+              {GooglePlaces ? (<>
+                {GooglePlaces.map(place => (
+                  <TouchableOpacity key={place.id} onPress={() => navigation.navigate('details', { place })} className={`relative flex-row  bg-[#f1f2f4]  rounded-xl mb-2`} style={{ width: wp('94%') }}>
+                    <Image source={place.image[0]} className={`rounded-xl shadow-lg `} style={{ height: hp('10%'), width: wp('25%') }} />
+                    <View className='absolute top-0 right-0  p-2 rounded-full'>
+                      <View className='rounded-full w-8 h-8 flex items-center justify-center bg-gray-500 bg-opacity-5'>
+                        <TouchableOpacity><Ionicons name='heart-outline' size={20} color='white' /></TouchableOpacity>
                       </View>
                     </View>
-                  </View>
-                </TouchableOpacity>
-              ))}
+                    <View className='ml-2'>
+                      <View className='space-y-2 p-1'>
+                        <Text className='text-lg text-black font-bold'>{place.name}</Text>
+                        <View className='flex-row items-center'>
+                          <Ionicons name='location' size={15} color='red' />
+                          <Text className='text-sm text-gray-400'>{place.location}</Text>
+                        </View>
+                        <View className='flex-row items-center gap-x-1'>
+                          <Ionicons name='star-half' size={15} color='yellow' />
+                          <Text className='text-sm text-gray-400'>{place.ratings}</Text>
+                        </View>
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+                ))}
+              </>) : (<>No Data loaded / fetched</>)}
             </ScrollView>
           </View>
         </ScrollView>
@@ -182,7 +246,7 @@ export default function HomeScreen({navigation}) {
 
 const CatTabs = (currentTab, setCurrentTab, title) => {
   return (
-    <TouchableOpacity className={`rounded-xl p-2 flex justify-center items-center ${currentTab === title && 'border-b border-black' }`}  onPress={()=>{setCurrentTab(title)}}>
+    <TouchableOpacity className={`p-2 flex justify-center items-center ${currentTab === title && 'border-b-2 border-black' }`}  onPress={()=>{setCurrentTab(title)}}>
       <Text className={`${currentTab === title ? 'text-[#000000]' : 'text-gray-300'}`}>{title}</Text>
     </TouchableOpacity>
   )
