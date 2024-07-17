@@ -129,10 +129,7 @@ export default function DetailsPage({route, navigation}) {
           </ScrollView>
         </View>
         <View className={`w-full flex-row  justify-between items-center px-3 `}>
-          <TouchableOpacity className={``}>
-            <Text className={`text-center text-sm text-blue-900 shadow-md`}>Write a review</Text>
-          </TouchableOpacity>
-          <TouchableOpacity key={place.id} className={`flex-row items-center justify-center gap-x-2 rounded-lg shadow-md bg-[#000000] p-3 w-44`} onPress={() => navigation.navigate('bookings', { place })}>
+          <TouchableOpacity key={place.id} className={`flex-row items-center justify-center gap-x-2 rounded-lg shadow-md bg-[#000000] p-3 w-full`} onPress={() => navigation.navigate('bookings', { place })}>
             <Text className={`text-center text-sm text-white`}>Book Now</Text>
             <Ionicons name='arrow-forward-sharp' size={20} color='white' />
           </TouchableOpacity>
